@@ -117,4 +117,8 @@ public class PFArray {
     public int size() {
         return arrays.size();
     }
+
+    public int[] getArray(int index) {
+        return arrays.get(index);
+    }
 }
