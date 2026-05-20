@@ -1,118 +1,120 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PFArray {
-    private int[][] data;
 
-    public PFArray() {
-        this.data = null;
-    }
+    private final List<int[]> arrays = new ArrayList<>();
 
-    public void createRandomArray(int arrayIndex) {
+    public void createRandomArray() {
         Random random = new Random();
         int length = random.nextInt(10) + 1;
-        data[arrayIndex] = new int[length];
+
+        int[] arr = new int[length];
         for (int i = 0; i < length; i++) {
-            data[arrayIndex][i] = random.nextInt(200) - 100;
+            arr[i] = random.nextInt(200) - 100;
         }
+
+        arrays.add(arr);
     }
 
-    public void createManualArray(int arrayIndex, String input) {
+    public void createManualArray(String input) {
         String[] parts = input.split(",");
-        data[arrayIndex] = new int[parts.length];
+        int[] arr = new int[parts.length];
+
         for (int i = 0; i < parts.length; i++) {
-            data[arrayIndex][i] = Integer.parseInt(parts[i].trim());
+            arr[i] = Integer.parseInt(parts[i].trim());
         }
+
+        arrays.add(arr);
     }
 
-    public void printArray() {
-        if (data == null) {
-            System.out.println("Array is empty");
+    public void printAllArrays() {
+        if (arrays.isEmpty()) {
+            System.out.println("No arrays created yet.");
             return;
         }
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[i].length; j++) {
-                System.out.print("Array " + i + " = ");
-                System.out.print(" |" + data[i][j]);
-            }
+
+        for (int i = 0; i < arrays.size(); i++) {
+            System.out.print("Array " + i + ": ");
+            for (int n : arrays.get(i)) System.out.print(n + " ");
             System.out.println();
-
         }
+    }
+
+    public void printArray(int index) {
+        if (index < 0 || index >= arrays.size()) {
+            System.out.println("Invalid index.");
+            return;
+        }
+
+        for (int n : arrays.get(index)) System.out.print(n + " ");
         System.out.println();
     }
 
-    public void getArray(int arrayIndex) {
-        if (data == null) {
-            System.out.println("Array number "+ arrayIndex +" is empty");
-            return;
-        }
-        for (int value : data[arrayIndex]) {
-            System.out.print("| " + value);
-        }
-        System.out.println();
+    public void addNumber(int index, int number) {
+        int[] old = arrays.get(index);
+        int[] newArr = new int[old.length + 1];
+
+        System.arraycopy(old, 0, newArr, 0, old.length);
+        newArr[newArr.length - 1] = number;
+
+        arrays.set(index, newArr);
     }
 
-    public void addNumber(int number, int arrayIndex) {
-        if (data == null) {
-            data[arrayIndex] = new int[]{number};
-            return;
-        }
-        int[] newArray = new int[data[arrayIndex].length + 1];
-        System.arraycopy(data[arrayIndex], 0, newArray, 0, data.length);
-        newArray[newArray.length -1] = number;
-        data[arrayIndex] = newArray;
-    }
-
-    public int findMax(int arrayIndex) {
-        int max = 0;
-        for (int value : data[arrayIndex]) {
-            if (value > max) max = value;
-        }
+    public int findMax(int index) {
+        int[] arr = arrays.get(index);
+        int max = arr[0];
+        for (int n : arr) if (n > max) max = n;
         return max;
     }
 
-    public int findMin(int arrayIndex) {
-        int min = 0;
-        for (int value : data[arrayIndex]) {
-            if (value < min) min = value;
-        }
+    public int findMin(int index) {
+        int[] arr = arrays.get(index);
+        int min = arr[0];
+        for (int n : arr) if (n < min) min = n;
         return min;
     }
 
-    public int sum(int arrayIndex) {
-        int sum = 0;
-        for (int value : data[arrayIndex]) {
-            sum += value;
-        }
-        return sum;
+    public int sum(int index) {
+        int total = 0;
+        for (int n : arrays.get(index)) total += n;
+        return total;
     }
 
-    public void removeNumber(int number, int arrayIndex) {
-        int count = 0;
-        for (int value : data[arrayIndex]) {
-            if (value == number) count++;
-        }
-        int[] newArray = new int[data.length - count];
-        int index = 0;
-        for (int value : data[arrayIndex]) {
-            if (value != number) {
-                newArray[index] = value;
-                index++;
+    public void removeNumber(int index, int number) {
+        int[] arr = arrays.get(index);
+        List<Integer> list = new ArrayList<>();
+
+        for (int n : arr) {
+            if (n != number) {
+                list.add(n);
             }
         }
-        data[arrayIndex] = newArray;
-    }
 
-    public void deleteArray(int arrayIndex) {
-        data[arrayIndex] = null;
-    }
-
-    public void generateNumber(int arrayIndex) {
-        Random random = new Random();
-        for (int i = 0; i < data[arrayIndex].length; i++) {
-            data[arrayIndex][i] = random.nextInt(200) - 100;
+        int[] newArr = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            newArr[i] = list.get(i);
         }
+        arrays.set(index, newArr);
+    }
 
+    public void regenerate(int index) {
+        Random random = new Random();
+        int[] arr = arrays.get(index);
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = random.nextInt(200) - 100;
+        }
+    }
+
+    public void deleteArray(int index) {
+        arrays.remove(index);
+    }
+
+    public int size() {
+        return arrays.size();
     }
 }
