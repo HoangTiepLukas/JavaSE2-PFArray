@@ -15,5 +15,13 @@ This project is structured using 2 main classes :
 - Delete number from array
 - Delete array
 
+### Running the Program
+Using IntelliJ IDEA
+Open the project.
+
+- Open Main.java.
+
+- Click Run.
+
 ### Testing
 - **JUNIT 5** for testing
