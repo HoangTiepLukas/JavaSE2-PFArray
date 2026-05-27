@@ -1,9 +1,9 @@
-**Java SE II
-This project is structured with 2 main classes :
-- PFArray: handle arrays operations
-- Main: provides console menu, interactions
+## Java SE II
+This project is structured using 2 main classes :
+- **PFArray**: handle arrays operations
+- **Main**: provides console menu, interactions
 
-**Functions:
+### Functions:
 - Create Multiple Arrays
 - Create random array
 - Create array manually
@@ -15,5 +15,5 @@ This project is structured with 2 main classes :
 - Delete number from array
 - Delete array
 
-**Testing
-- JUNIT 5 for testing
+### Testing
+- **JUNIT 5** for testing
