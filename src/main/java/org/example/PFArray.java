@@ -30,13 +30,19 @@ public class PFArray {
      * @param input input numbers
      */
     public void createManualArray(String input) {
+        if (input == null) return;
         // split numbers with comma and store them in parts array
         String[] parts = input.split(",");
         int[] arr = new int[parts.length];
 
         //convert string numbers to integer and store them in new array
         for (int i = 0; i < parts.length; i++) {
-            arr[i] = Integer.parseInt(parts[i].trim());
+            try {
+                arr[i] = Integer.parseInt(parts[i].trim());
+            } catch (NumberFormatException _) {
+                System.out.println("Invalid number:" + parts[i]);
+                return;
+            }
         }
 
         arrays.add(arr);
