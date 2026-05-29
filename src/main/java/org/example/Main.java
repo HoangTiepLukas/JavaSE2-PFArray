@@ -19,7 +19,7 @@ public class Main {
             System.out.println("5 - Exit");
             System.out.print("Choice: ");
 
-            int choice = Integer.parseInt(scanner.nextLine());
+            int choice = readInt(scanner);
 
             switch (choice) {
                 case 1 -> pfArray.createRandomArray();
@@ -38,13 +38,18 @@ public class Main {
         }
 
     }
+
+    /**
+     * work with specific array
+     * @param pfArray PFArray
+     */
     private static void workWithArray(PFArray pfArray) {
         if (pfArray.size() == 0) {
             System.out.println("No arrays created yet.");
             return;
         }
         System.out.print("Enter array index: ");
-        int index = Integer.parseInt(scanner.nextLine());
+        int index = readInt(scanner);
 
         if (index < 0 || index > pfArray.size()) {
             System.out.println("Invalid index");
@@ -63,20 +68,38 @@ public class Main {
             System.out.println("9 - Back");
             System.out.print("Choice: ");
 
-            int choice = Integer.parseInt(scanner.nextLine());
+            int choice = readInt(scanner);
 
             switch (choice) {
                 case 1 -> pfArray.printArray(index);
                 case 2 -> {
                     System.out.print("Enter number: ");
-                    pfArray.addNumber(index, Integer.parseInt(scanner.nextLine()));
+                    pfArray.addNumber(index, readInt(scanner));
                 }
-                case 3 -> System.out.println("Max = " + pfArray.findMax(index));
-                case 4 -> System.out.println("Min = " + pfArray.findMin(index));
-                case 5 -> System.out.println("Sum = " + pfArray.sum(index));
+                case 3 -> {
+                    if (pfArray.getArray(index).length == 0) {
+                        System.out.println("Can not find max, array is empty");
+                    } else {
+                        System.out.println("Max = " + pfArray.findMax(index));
+                    }
+                }
+                case 4 -> {
+                    if (pfArray.getArray(index).length == 0) {
+                        System.out.println("Can not find min, array is empty");
+                    } else {
+                        System.out.println("Min = " + pfArray.findMin(index));
+                    }
+                }
+                case 5 -> {
+                    if (pfArray.getArray(index).length == 0) {
+                        System.out.println("Can sum, array is empty");
+                    } else {
+                        System.out.println("Sum = " + pfArray.sum(index));
+                    }
+                }
                 case 6 -> {
                     System.out.print("Enter number to remove: ");
-                    int num = Integer.parseInt(scanner.nextLine());
+                    int num = readInt(scanner);
                     pfArray.removeNumber(index, num);
                 }
                 case 7 -> pfArray.regenerate(index);
@@ -90,5 +113,20 @@ public class Main {
             }
         }
 
+    }
+
+    /**
+     * read only integer from user input
+     * @param scanner scanner
+     * @return choice
+     */
+    private static int readInt(Scanner scanner) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input");
+            scanner.next();
+        }
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return choice;
     }
 }
